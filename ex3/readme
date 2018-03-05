@@ -1,0 +1,21 @@
+simulator.py is a script used to run one of three different simulation:
+
+1. protein folding
+Simulates the folding of a protein in the presence of changing concentrations of urea from 0 to 10 M. Generates and saves a plot of the equilibrium fraction of folded/unfolded protein and intermediate versus urea as Protein.pdf.
+Use: python simulator.py fold
+Folding_model.pdf contains the result from such a simulation.
+
+2. oregonator reaction
+Simulates the oregonator oscillatory reaction for 90 seconds. Generates and saves a plot of concentrations of 7 different species versus time as Oregonator.pdf
+Use: python simulator.py oregonator
+Oregonator_model.pdf contains the result from such a simulation
+
+3. diffusion oregonator
+Simulates an oregonator reaction for 90 seconds as it is allowed to diffuse along #cells cells with a diffusion constant D, both of which can be specified as commandline arguments (default 5 cells, D=500). The simulation is carried out by letting the reaction proceed in each cell followed by diffusion between cells. This is carried out for each timestep.
+Use: python simulator.py diffusion (OPTIONAL: #cells D)
+D400cell*_model.pdf illustrates results from such a simulation with 5 cells and D=500
+
+The simulations take a while to run (folding doesn't take too long but the rest of them you won't want to wait for). This may be because it's badly written or because they are tasks that inherently take a while - probably a combination of the two.
+
+
+

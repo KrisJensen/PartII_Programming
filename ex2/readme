@@ -1,0 +1,5 @@
+calc_freq.py extracts the data given in Gaussian output files in a directory given as a commandline argument.
+Use: python calc_freq.py *name of directory*
+Assumes file name of the form 'Molecule.r*bond_length*theta*bond_angle*.out'. Plots bond energy as a function of bond lengths and angles and fits a quadratic function to the minimum of the energy. Prints vibrational frequencies, opens a plot, and saves the plot as a figure named *Molecule*.pdf.
+
+

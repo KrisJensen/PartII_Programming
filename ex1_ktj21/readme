@@ -1,0 +1,15 @@
+The Hückel solver is started by running solver.py in Python 3.
+
+This initiates an environment for running Hückel calculation on linear polyenes, cyclic polyenes and platonic solids. The program is structured as two sets of loops; an outer loop where one of these three categories is picked and an inner loop where an instance of the category is selected. Following a calculation, the user will be asked if (s)he wants to run another calculation on the same type of moelcule. In the case of a no, the user will have the opportunity to move into a different subloop before the program is terminated.
+
+Navigating these loops and specifying molecules for calculations should be pretty self-explanatory from the text on the screen. Inputs should be given as specified in the on-screen instructions, otherwise an error message will be raised. e.g. if it says "select tet for tetrahedron", an input of 'tet' will run a calculation whereas an input of 'tetrahedon' will raise an error message and ask for a different input (quatation marks sould not be included but are used here for clarity). For integer inputs specifying the size of polyenes, the input must be given as a number (i.e. '5' rather than 'five').
+
+The huckel.py file contains three classes used for running the calculations; a general 'molecule' class containing functions for solving the Huckel equations, sorting eigenvalues and counting degeneracies; and two subclasses for the platonic solids and polyenes respectively. Degeneracies are counted at the 8th decimal place. If calcualtions are run on very large systems (N>10000), degeneracies might be artefacts of rounding and an error message is printed.
+
+The solver.py file contains the main loop for running calculations and a number of functions representing the different sub-environments and used for running the actual calculations by initiating instances of the huckel.py classes and calling their class methods.
+
+Enjoy,
+ktj21
+
+
+

@@ -1,0 +1,73 @@
+simulator.py is a script that performs a simulation to find the optimum configuration of 7 atoms with a given pair potential as specified by a commandline input.
+
+The simulation works by calculating the gradient of the potential energy with respect to all coordinates and moving in a steepest descent manner towards a local minimum.
+The calculation is considered to have converged when the 2-norm of two subsequent distance matrices is less than a specified threshold value (using the gradient to determine convergence did not work since the system started translating).
+
+Use: python simulation.py *potential (LJ/M1/M2)* (OPTIONAL:*d0* *nrand* *stepsize* *cutoff* *nmax*
+
+   LJ is a Leonard-Jones potential. M1 is a Morse potential with r_eq/sigma=1. M2 is a Morse potential with r_eq/sigma=2.
+
+   d0 specifies the sidelength of a cube, the corners of which are either the initial atom positions (nrand = 0) or specify the boundary for a random initial system (nrand != 0). (float).
+
+   if nrand > 0, nrand calculations are run with random starting configurations within a cube with sidelength d0. The lowest energy final system is picked as the global minimum. This allows for a more thorough scanning of the potential energy surfaces and the investigation of multiple local minima - however, convergence is expected to be slower. (int).
+
+   Stepsize specifies the delta used for calculating gradients and multiplied by the gradients to determine the absolute step (float).
+
+   cutoff is the convergence threshold for the norm of the most recent change in distance matrices (float).
+
+   nmax is the maximum number of iterations run (int).
+
+For testing that the program works, I would suggest running it with default arguments for everything, specifying only the potential - it will run with a well-specified starting configuration and converge to a local minimum in a sensible amount of time (d0=2 makes convergence faster for M2).
+
+Summary of results for random initial configurations which I assume you don't really want to wait for:
+
+   M1 converges to a single minimum with:
+   Potential energy: 0.671823952467
+   Output from 15 calculations with random initial conditions in M1Rand15 (d0=2)
+
+   M2 converges to two different local minima with the global minimum having:
+   Potential energy: 2.17321424388
+   Output from 15 calculations with random initial conditions in M2Rand15 (d0=4)
+
+   LJ converges to multiple local minima with the global minimum having:
+   Potential energy: -16.5053840003
+   Output from 50 calculations with random initial conditions in LJRand50 (d0=2)
+
+Summarized results are at the end of each file (grep 'Potential energy:' if you just want all the energies)
+
+Cf. results for fixed initial conditions:
+
+LJ
+Final distance matrix:
+[[ 0.     1.114  1.114  1.126  1.114  1.126  1.126]
+ [ 1.114  0.     1.855  1.118  1.855  1.118  1.824]
+ [ 1.114  1.855  0.     1.118  1.855  1.824  1.118]
+ [ 1.126  1.118  1.118  0.     1.824  1.119  1.119]
+ [ 1.114  1.855  1.855  1.824  0.     1.118  1.118]
+ [ 1.126  1.118  1.824  1.119  1.118  0.     1.119]
+ [ 1.126  1.824  1.118  1.119  1.118  1.119  0.   ]]
+Potential energy: -15.5932107147
+
+M1
+Final distance matrix:
+[[ 0.     0.813  0.813  1.239  0.813  1.239  1.239]
+ [ 0.813  0.     1.115  0.862  1.115  0.862  1.328]
+ [ 0.813  1.115  0.     0.862  1.115  1.328  0.862]
+ [ 1.239  0.862  0.862  0.     1.328  0.915  0.915]
+ [ 0.813  1.115  1.115  1.328  0.     0.862  0.862]
+ [ 1.239  0.862  1.328  0.915  0.862  0.     0.915]
+ [ 1.239  1.328  0.862  0.915  0.862  0.915  0.   ]]
+Potential energy: 0.687288520732
+
+M2
+Final distance matrix:
+[[ 0.     1.781  1.781  2.921  1.781  2.921  2.921]
+ [ 1.781  0.     2.109  1.825  2.109  1.825  2.712]
+ [ 1.781  2.109  0.     1.825  2.109  2.712  1.825]
+ [ 2.921  1.825  1.825  0.     2.712  1.909  1.909]
+ [ 1.781  2.109  2.109  2.712  0.     1.825  1.825]
+ [ 2.921  1.825  2.712  1.909  1.825  0.     1.909]
+ [ 2.921  2.712  1.825  1.909  1.825  1.909  0.   ]]
+Potential energy: 2.3241717007
+
+Evidently these are NOT the global minima for LJ and M2.
